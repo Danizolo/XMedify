@@ -22,8 +22,26 @@ function FindDoctors() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchStates();
-  }, []);
+    if (selectedState && selectedCity) {
+      fetchHospitals(selectedState, selectedCity);
+    }
+  }, [selectedState, selectedCity]);
+
+  const fetchHospitals = async (state, city) => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://meddata-backend.onrender.com/data?state=${state}&city=${city}`
+      );
+      const data = await res.json();
+      setCenters(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      setCenters([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchStates = async () => {
     try {

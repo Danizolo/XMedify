@@ -1,20 +1,27 @@
 /**
-    * @description      : 
-    * @author           : DHANUSH
-    * @group            : 
-    * @created          : 21/10/2025 - 19:15:17
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 21/10/2025
-    * - Author          : DHANUSH
-    * - Modification    : 
-**/
+ * @description      :
+ * @author           : DHANUSH
+ * @group            :
+ * @created          : 21/10/2025 - 19:15:17
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 21/10/2025
+ * - Author          : DHANUSH
+ * - Modification    :
+ **/
 import React, { useState } from "react";
 
 const timings = {
   Morning: ["8:00 AM", "8:45 AM", "10:00 AM", "10:30 AM"],
-  Afternoon: ["12:30 PM", "1:00 PM", "2:30 PM", "3:00 PM", "4:00 PM", "4:30 PM"],
+  Afternoon: [
+    "12:30 PM",
+    "1:00 PM",
+    "2:30 PM",
+    "3:00 PM",
+    "4:00 PM",
+    "4:30 PM",
+  ],
   Evening: ["6:30 PM", "7:00 PM", "8:00 PM"],
 };
 
@@ -31,7 +38,7 @@ function formatDate(d) {
 export default function HospitalCard({ cardDetails }) {
   const [open, setOpen] = useState(false);
   const [chosenDateIndex, setChosenDateIndex] = useState(0);
-  const [chosenPeriod, setChosenPeriod] = useState(null); 
+  const [chosenPeriod, setChosenPeriod] = useState(null);
   const [chosenTime, setChosenTime] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -53,12 +60,8 @@ export default function HospitalCard({ cardDetails }) {
   }
 
   function bookMySlot() {
-    if (!chosenDateIndex && chosenDateIndex !== 0) {
-      setMessage("Please pick a date");
-      return;
-    }
-    if (!chosenTime || !chosenPeriod) {
-      setMessage("Please pick a slot");
+    if (!chosenPeriod || !chosenTime) {
+      setMessage("Please pick your slot");
       return;
     }
 
@@ -68,30 +71,54 @@ export default function HospitalCard({ cardDetails }) {
       details: cardDetails,
     };
 
-    const existed = JSON.parse(localStorage.getItem("bookings")) || [];
-    const updated = [...existed, booking];
-    localStorage.setItem("bookings", JSON.stringify(updated));
+    const existing = JSON.parse(localStorage.getItem("bookings")) || [];
+    localStorage.setItem("bookings", JSON.stringify([...existing, booking]));
 
-    setMessage(
-      `Booked ${cardDetails["Hospital Name"]} on ${booking.day} ${booking.time}`
-    );
+    setMessage("Appointment booked!");
 
-    setTimeout(() => {
-      closeModal();
-    }, 700);
+    //
+    // if (!chosenDateIndex && chosenDateIndex !== 0) {
+    //   setMessage("Please pick a date");
+    //   return;
+    // }
+    // if (!chosenTime || !chosenPeriod) {
+    //   setMessage("Please pick a slot");
+    //   return;
+    // }
+
+    // const booking = {
+    //   day: formatDate(next7Days[chosenDateIndex]),
+    //   time: chosenTime,
+    //   details: cardDetails,
+    // };
+
+    // const existed = JSON.parse(localStorage.getItem("bookings")) || [];
+    // const updated = [...existed, booking];
+    // localStorage.setItem("bookings", JSON.stringify(updated));
+
+    // setMessage(
+    //   `Booked ${cardDetails["Hospital Name"]} on ${booking.day} ${booking.time}`
+    // );
+
+    // setTimeout(() => {
+    //   closeModal();
+    // }, 700);
   }
 
   return (
-    <div className="hospitalCard">
+    <div className="hospitalCard" onClick={openModal}>
       <div className="cardHeader">
         <h3>{cardDetails["Hospital Name"]}</h3>
-        <div className="rating">Rating: {cardDetails["Hospital overall rating"]}</div>
+        <div className="rating">
+          Rating: {cardDetails["Hospital overall rating"]}
+        </div>
       </div>
 
       <div className="cardBody">
         <p>
-          <strong>Address:</strong>{" "}
-          {cardDetails["Address"]}, {cardDetails["City"]}, {cardDetails["State"]} - {cardDetails["ZIP Code"]}
+          <strong>Address:</strong> {cardDetails["Address"]},{" "}
+          {cardDetails["City"]}, {cardDetails["State"]} -{" "}
+          {cardDetails["ZIP Code"]}
         </p>
         <p>
           <strong>Phone:</strong> {cardDetails["Phone Number"]}
@@ -101,10 +128,8 @@ export default function HospitalCard({ cardDetails }) {
         </p>
       </div>
 
-      <div className="cardActions">
-        <button className="btn" onClick={openModal}>
-          Book FREE Center Visit
-        </button>
+      <div className="cardActions" onClick={openModal}>
+        <button className="btn">Book FREE Center Visit</button>
       </div>
 
       {open && (
@@ -118,7 +143,9 @@ export default function HospitalCard({ cardDetails }) {
                 {next7Days.map((d, idx) => (
                   <button
                     key={idx}
-                    className={`dateBtn ${idx === chosenDateIndex ? "active" : ""}`}
+                    className={`dateBtn ${
+                      idx === chosenDateIndex ? "active" : ""
+                    }`}
                     onClick={() => {
                       setChosenDateIndex(idx);
                       setChosenPeriod(null);
@@ -126,7 +153,9 @@ export default function HospitalCard({ cardDetails }) {
                     }}
                   >
                     <div className="dateShort">{d.toLocaleDateString()}</div>
-                    <div className="dateLabel">{d.toDateString().split(" ").slice(0,3).join(" ")}</div>
+                    <div className="dateLabel">
+                      {d.toDateString().split(" ").slice(0, 3).join(" ")}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -138,7 +167,11 @@ export default function HospitalCard({ cardDetails }) {
                 {timings.Morning.map((t, i) => (
                   <button
                     key={i}
-                    className={`slotBtn ${chosenTime === t && chosenPeriod === "Morning" ? "selected" : ""}`}
+                    className={`slotBtn ${
+                      chosenTime === t && chosenPeriod === "Morning"
+                        ? "selected"
+                        : ""
+                    }`}
                     onClick={() => pickTime("Morning", t)}
                   >
                     {t}
@@ -151,7 +184,11 @@ export default function HospitalCard({ cardDetails }) {
                 {timings.Afternoon.map((t, i) => (
                   <button
                     key={i}
-                    className={`slotBtn ${chosenTime === t && chosenPeriod === "Afternoon" ? "selected" : ""}`}
+                    className={`slotBtn ${
+                      chosenTime === t && chosenPeriod === "Afternoon"
+                        ? "selected"
+                        : ""
+                    }`}
                     onClick={() => pickTime("Afternoon", t)}
                   >
                     {t}
@@ -164,7 +201,11 @@ export default function HospitalCard({ cardDetails }) {
                 {timings.Evening.map((t, i) => (
                   <button
                     key={i}
-                    className={`slotBtn ${chosenTime === t && chosenPeriod === "Evening" ? "selected" : ""}`}
+                    className={`slotBtn ${
+                      chosenTime === t && chosenPeriod === "Evening"
+                        ? "selected"
+                        : ""
+                    }`}
                     onClick={() => pickTime("Evening", t)}
                   >
                     {t}
@@ -176,9 +217,14 @@ export default function HospitalCard({ cardDetails }) {
             {message && <div className="msg">{message}</div>}
 
             <div className="modalActions">
-              <button className="btn primary" onClick={bookMySlot}>
+              <button
+                type="button"
+                className="btn primary"
+                onClick={bookMySlot}
+              >
                 Book
               </button>
+
               <button className="btn danger" onClick={closeModal}>
                 Cancel
               </button>
