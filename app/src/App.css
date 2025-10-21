@@ -1,0 +1,193 @@
+/* src/index.css */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: #f6f7fb;
+  color: #222;
+}
+
+.topnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2b3a67;
+  color: #fff;
+  padding: 12px 20px;
+}
+
+.topnav .brand {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.topnav .navlinks a {
+  color: #fff;
+  margin-left: 16px;
+  text-decoration: none;
+}
+
+.container {
+  padding: 20px;
+}
+
+.searchSection {
+  background: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.searchForm {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+select {
+  padding: 8px;
+  min-width: 220px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #d900ff;
+  color: #fff;
+}
+
+.btn.danger {
+  background: #e53935;
+  color: #fff;
+}
+
+.resultsSection .availableCenters {
+  margin-top: 16px;
+}
+
+.hospitalCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.hospitalCard {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(30,30,30,0.08);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardBody p {
+  margin: 6px 0;
+}
+
+.cardActions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right:0;
+  bottom:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20,20,20,0.45);
+  z-index: 2000;
+}
+
+.modal {
+  background: #fff;
+  width: 860px;
+  max-width: 95%;
+  padding: 18px;
+  border-radius: 8px;
+}
+
+.dateTabs {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 16px 0;
+  flex-wrap: wrap;
+}
+
+.dateBtn {
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.dateBtn.active {
+  border-color: #9c27b0;
+  background: #f7ecfb;
+}
+
+.slotRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.slotBtn {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.slotBtn.selected {
+  border-color: #2b3a67;
+  background: #e9eef9;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.msg {
+  margin-top: 8px;
+  color: green;
+}
+
+.myBookingsPage .bookingCard {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
