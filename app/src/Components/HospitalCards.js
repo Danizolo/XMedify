@@ -61,7 +61,6 @@ function HospitalCards({ data }) {
     <div className="hospital-card">
       <Card>
         <div className="hospital-content">
-          {/* Image on left */}
           <div className="hospital-image">
             <Image
               src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png"
@@ -71,7 +70,6 @@ function HospitalCards({ data }) {
             />
           </div>
 
-          {/* Hospital details on right */}
           <div className="hospital-info">
             <h3>{data["Hospital Name"]}</h3>
             <p>{data["Address"]}</p>
@@ -83,7 +81,6 @@ function HospitalCards({ data }) {
           </div>
         </div>
 
-        {/* Booking Timings Section */}
         {showTimings && (
           <div className="timing-section">
             <Divider />
@@ -128,7 +125,6 @@ function HospitalCards({ data }) {
               ))}
             </div>
 
-            {/* ✅ Book / Cancel Buttons */}
             <div className="booking-actions">
               <Button
                 label="Book"

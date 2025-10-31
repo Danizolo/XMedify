@@ -2,7 +2,7 @@
  * @description      :
  * @author           : DHANUSH
  * @group            :
- * @created          : 31/10/2025 - 22:49:35
+ * @created          : 31/10/2025 - 20:41:01
  *
  * MODIFICATION LOG
  * - Version         : 1.0.0
@@ -10,18 +10,6 @@
  * - Author          : DHANUSH
  * - Modification    :
  **/
-/**
- * @description      : Hospitals Search and Display Page
- * @author           : DHANUSH
- * @created          : 31/10/2025
- *
- * MODIFICATION LOG
- * - Version         : 1.1.0
- * - Date            : 31/10/2025
- * - Author          : DHANUSH
- * - Modification    : Auto-fetch hospitals when both state and city are selected
- **/
-
 import { useState, useEffect } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
@@ -42,16 +30,10 @@ function Hospitals() {
   useEffect(() => {
     if (selectedState) {
       getCitiesByState(selectedState);
-      setSelectedCity("");
+      setSelectedCity(null);
       setMedicalCenters([]);
     }
   }, [selectedState]);
-
-  useEffect(() => {
-    if (selectedState && selectedCity) {
-      getMedicalCenters(selectedState, selectedCity);
-    }
-  }, [selectedState, selectedCity]);
 
   const getAllStates = async () => {
     try {
@@ -68,6 +50,7 @@ function Hospitals() {
   const getCitiesByState = async (stateName) => {
     try {
       if (!stateName) return;
+
       const response = await fetch(
         `https://meddata-backend.onrender.com/cities/${stateName}`
       );
@@ -91,6 +74,14 @@ function Hospitals() {
     }
   };
 
+  const handleSubmit = () => {
+    if (selectedState && selectedCity) {
+      getMedicalCenters(selectedState, selectedCity);
+    } else {
+      alert("Please select both State and City.");
+    }
+  };
+
   return (
     <div>
       <div className="searchHeaderParent">
@@ -102,7 +93,7 @@ function Hospitals() {
               value={selectedState}
               onChange={(e) => setSelectedState(e.value)}
               options={states}
-              placeholder="Select a State"
+              placeholder="Select a City"
             />
 
             <Dropdown
@@ -117,22 +108,30 @@ function Hospitals() {
           </div>
 
           <div className="searchBtn">
-            <Button label="Search" severity="help" disabled />
+            <Button
+              label="Search"
+              type="submit"
+              id="searchBtn"
+              severity="help"
+              onClick={handleSubmit}
+            />
           </div>
         </div>
       </div>
 
-      {medicalCenters.length > 0 && (
-        <h1 style={{ marginTop: "20px" }}>
-          {medicalCenters.length} medical center
-          {medicalCenters.length > 1 ? "s" : ""} available in {selectedCity}
-        </h1>
+      {medicalCenters && medicalCenters.length > 0 && (
+        <div>
+          <h1>
+            {medicalCenters.length} medical center
+            {medicalCenters.length > 1 ? "s" : ""} available in {selectedCity}
+          </h1>
+        </div>
       )}
 
       <div className="centerSection">
-        {medicalCenters.map((ele, index) => (
-          <HospitalCards key={index} data={ele} />
-        ))}
+        {medicalCenters.map((ele, index) => {
+          return <HospitalCards key={index} data={ele} />;
+        })}
       </div>
     </div>
   );
