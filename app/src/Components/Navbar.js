@@ -1,71 +1,55 @@
 /**
- * @description      :
+    * @description      : 
+    * @author           : DHANUSH
+    * @group            : 
+    * @created          : 31/10/2025 - 22:47:14
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 31/10/2025
+    * - Author          : DHANUSH
+    * - Modification    : 
+**/
+/**
+ * @description      : Application Navigation Bar
  * @author           : DHANUSH
- * @group            :
  * @created          : 31/10/2025 - 20:38:50
- *
- * MODIFICATION LOG
- * - Version         : 1.0.0
- * - Date            : 31/10/2025
- * - Author          : DHANUSH
- * - Modification    :
+ * @modified         : 31/10/2025
  **/
+
 import React from "react";
 import { Menubar } from "primereact/menubar";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+
   const items = [
     {
       label: "Home",
       icon: "pi pi-home",
+      command: () => navigate("/"),
     },
     {
-      label: "Features",
-      icon: "pi pi-star",
+      label: "Hospitals",
+      icon: "pi pi-building",
+      command: () => navigate("/hospitals"),
     },
     {
-      label: "Projects",
-      icon: "pi pi-search",
-      items: [
-        {
-          label: "Components",
-          icon: "pi pi-bolt",
-        },
-        {
-          label: "Blocks",
-          icon: "pi pi-server",
-        },
-        {
-          label: "UI Kit",
-          icon: "pi pi-pencil",
-        },
-        {
-          label: "Templates",
-          icon: "pi pi-palette",
-          items: [
-            {
-              label: "Apollo",
-              icon: "pi pi-palette",
-            },
-            {
-              label: "Ultima",
-              icon: "pi pi-palette",
-            },
-          ],
-        },
-      ],
+      label: "My Bookings",
+      icon: "pi pi-calendar",
+      command: () => navigate("/my-bookings"),
     },
     {
       label: "Contact",
       icon: "pi pi-envelope",
+      command: () => alert("Contact support at support@example.com"),
     },
   ];
 
   return (
     <div className="card">
-      <Menubar
-        model={items}
-      />
+      <Menubar model={items} />
     </div>
   );
 }

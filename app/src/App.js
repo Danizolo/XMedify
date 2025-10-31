@@ -24,7 +24,6 @@ function App() {
       <div className="App">
         <Navbar />
 
-        {/* Page Routes */}
         <Routes>
           <Route path="/" element={<Hospitals />} />
           <Route path="/my-bookings" element={<MyBookings />} />
