@@ -22,8 +22,6 @@ function Hospitals() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [medicalCenters, setMedicalCenters] = useState([]);
-  const [showStateDropdown, setShowStateDropdown] = useState(false);
-  const [showCityDropdown, setShowCityDropdown] = useState(false);
 
   useEffect(() => {
     getAllStates();
@@ -84,24 +82,14 @@ function Hospitals() {
     }
   };
 
-  const handleStateSelect = (state) => {
-    setSelectedState(state);
-    setSelectedCity("");
-    setShowStateDropdown(false);
-    getCitiesByState(state);
-  };
-
-  const handleCitySelect = (city) => {
-    setSelectedCity(city);
-    setShowCityDropdown(false);
-  };
+  
 
   return (
     <div>
       <div className="searchHeaderParent">
         <div className="searchFieldsHeader">
           <div className="searchFields">
-            {/* <Dropdown
+            <Dropdown
               id="state"
               style={{ width: "250px" }}
               value={selectedState}
@@ -118,46 +106,9 @@ function Hospitals() {
               options={cities}
               placeholder="Select a City"
               disabled={!selectedState}
-            /> */}
+            />
 
-            <div id="state" className="dropdown-wrapper">
-              <button
-                type="button"
-                className="dropdown-btn"
-                onClick={() => setShowStateDropdown(!showStateDropdown)}
-              >
-                {selectedState || "Select State"}
-              </button>
-              {showStateDropdown && (
-                <ul className="dropdown-list">
-                  {states.map((s, i) => (
-                    <li key={i} onClick={() => handleStateSelect(s)}>
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            <div id="city" className="dropdown-wrapper">
-              <button
-                type="button"
-                className="dropdown-btn"
-                disabled={!selectedState}
-                onClick={() => setShowCityDropdown(!showCityDropdown)}
-              >
-                {selectedCity || "Select City"}
-              </button>
-              {showCityDropdown && (
-                <ul className="dropdown-list">
-                  {cities.map((c, i) => (
-                    <li key={i} onClick={() => handleCitySelect(c)}>
-                      {c}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            
           </div>
 
           <div>
@@ -177,7 +128,7 @@ function Hospitals() {
         <div>
           <h1>
             {medicalCenters.length} medical center
-            {medicalCenters.length > 1 ? "s" : ""} available in {selectedCity}
+            {medicalCenters.length > 1 ? "s" : ""} available in {selectedCity.toLowerCase()}
           </h1>
         </div>
       )}
