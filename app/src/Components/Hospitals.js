@@ -28,6 +28,12 @@ function Hospitals() {
   }, []);
 
   useEffect(() => {
+    if (selectedState && selectedCity) {
+      getMedicalCenters(selectedState, selectedCity);
+    }
+  }, [selectedState, selectedCity]);
+
+  useEffect(() => {
     if (selectedState) {
       getCitiesByState(selectedState);
       setSelectedCity(null);

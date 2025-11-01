@@ -1,27 +1,35 @@
 /**
-    * @description      : 
-    * @author           : DHANUSH
-    * @group            : 
-    * @created          : 31/10/2025 - 22:36:28
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 31/10/2025
-    * - Author          : DHANUSH
-    * - Modification    : 
-**/
+ * @description      :
+ * @author           : DHANUSH
+ * @group            :
+ * @created          : 31/10/2025 - 22:36:28
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 31/10/2025
+ * - Author          : DHANUSH
+ * - Modification    :
+ **/
 import { useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import { Image } from "primereact/image";
 import "../App.css";
+import { useEffect } from "react";
 
 function HospitalCards({ data }) {
   const [showTimings, setShowTimings] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [bookings, setBookings] = useState([]);
 
-  const morningTiming = ["08:00 AM", "08:45 AM", "10:00 AM", "10:30 AM", "11:00 AM"];
+  const morningTiming = [
+    "08:00 AM",
+    "08:45 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+  ];
   const afternoonTimings = ["12:30 PM", "01:00 PM", "01:45 PM", "02:30 PM"];
   const eveningTimings = ["06:30 PM", "07:15 PM", "08:00 PM"];
 
@@ -29,6 +37,11 @@ function HospitalCards({ data }) {
     setShowTimings(!showTimings);
     setSelectedTime(null);
   };
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("bookings")) || [];
+    setBookings(stored);
+  }, []);
 
   const handleBook = () => {
     if (!selectedTime) {
@@ -48,7 +61,9 @@ function HospitalCards({ data }) {
     existingBookings.push(booking);
     localStorage.setItem("bookings", JSON.stringify(existingBookings));
 
-    alert(`✅ Appointment booked at ${selectedTime} for ${data["Hospital Name"]}`);
+    alert(
+      `✅ Appointment booked at ${selectedTime} for ${data["Hospital Name"]}`
+    );
     setShowTimings(false);
   };
 
@@ -84,7 +99,9 @@ function HospitalCards({ data }) {
         {showTimings && (
           <div className="timing-section">
             <Divider />
-            <p><strong>Today</strong></p>
+            <p>
+              <strong>Today</strong>
+            </p>
 
             <p>Morning</p>
             <div className="timing-group">
@@ -93,7 +110,9 @@ function HospitalCards({ data }) {
                   key={time}
                   label={time}
                   outlined
-                  className={`time-btn ${selectedTime === time ? "selected" : ""}`}
+                  className={`time-btn ${
+                    selectedTime === time ? "selected" : ""
+                  }`}
                   onClick={() => setSelectedTime(time)}
                 />
               ))}
@@ -106,7 +125,9 @@ function HospitalCards({ data }) {
                   key={time}
                   label={time}
                   outlined
-                  className={`time-btn ${selectedTime === time ? "selected" : ""}`}
+                  className={`time-btn ${
+                    selectedTime === time ? "selected" : ""
+                  }`}
                   onClick={() => setSelectedTime(time)}
                 />
               ))}
@@ -119,7 +140,9 @@ function HospitalCards({ data }) {
                   key={time}
                   label={time}
                   outlined
-                  className={`time-btn ${selectedTime === time ? "selected" : ""}`}
+                  className={`time-btn ${
+                    selectedTime === time ? "selected" : ""
+                  }`}
                   onClick={() => setSelectedTime(time)}
                 />
               ))}
