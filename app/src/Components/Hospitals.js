@@ -27,7 +27,6 @@ function Hospitals() {
     getAllStates();
   }, []);
 
-
   useEffect(() => {
     if (selectedState) {
       getCitiesByState(selectedState);
@@ -108,14 +107,16 @@ function Hospitals() {
             />
           </div>
 
-          <div className="searchBtn">
-            <Button
-              label="Search"
+          <div>
+            <button 
+              
               type="submit"
               id="searchBtn"
-              style={{ backgroundColor: "#db09cd" }}
               onClick={handleSubmit}
-            />
+              style={{ padding: "10px", backgroundColor: "#db09cd" }}
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>

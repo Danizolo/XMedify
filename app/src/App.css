@@ -265,3 +265,10 @@
 .specializationCard:hover {
   transform: scale(1.05);
 }
+
+#searchBtn{
+  border: 0.5px solid lightgray;
+  border-radius: 6px;
+  width: 100px;
+  color: white;
+}
