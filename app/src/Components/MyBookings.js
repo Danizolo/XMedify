@@ -2,19 +2,19 @@
     * @description      : 
     * @author           : DHANUSH
     * @group            : 
-    * @created          : 31/10/2025 - 22:45:37
+    * @created          : 01/11/2025 - 11:37:04
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 31/10/2025
+    * - Date            : 01/11/2025
     * - Author          : DHANUSH
     * - Modification    : 
 **/
 /**
  * @description      : Displays all booked hospital appointments
  * @author           : DHANUSH
- * @created          : 31/10/2025 - 21:04:15
- * @modified         : 31/10/2025
+ * @created          : 31/10/2025
+ * @modified         : 31/10/2025 - Assistant
  **/
 
 import { useEffect, useState } from "react";
@@ -39,18 +39,22 @@ function MyBookings() {
         <div className="bookings-list">
           {bookings.map((booking, index) => (
             <Card key={index} className="booking-card">
-              <h3>{booking.hospitalName}</h3>
-              <p><strong>Address:</strong> {booking.address}</p>
+              <h3>{booking["Hospital Name"]}</h3>
               <p>
-                <strong>City:</strong> {booking.city} |{" "}
-                <strong>State:</strong> {booking.state}
+                <strong>City:</strong> {booking["City"]} |{" "}
+                <strong>State:</strong> {booking["State"]}
               </p>
               <p>
-                <strong>Appointment Time:</strong> {booking.time}
+                <strong>Hospital Type:</strong> {booking["Hospital Type"]}
               </p>
               <p>
-                <strong>Booked On:</strong>{" "}
-                {new Date().toLocaleString()}
+                <strong>Overall Rating:</strong> {booking["Hospital overall rating"]}
+              </p>
+              <p>
+                <strong>Booking Date:</strong> {booking.bookingDate}
+              </p>
+              <p>
+                <strong>Booking Time:</strong> {booking.bookingTime}
               </p>
             </Card>
           ))}

@@ -1,24 +1,30 @@
 /**
- * @description      :
+    * @description      : 
+    * @author           : DHANUSH
+    * @group            : 
+    * @created          : 01/11/2025 - 11:36:53
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 01/11/2025
+    * - Author          : DHANUSH
+    * - Modification    : 
+**/
+/**
+ * @description      : Hospital card with booking functionality
  * @author           : DHANUSH
- * @group            :
- * @created          : 31/10/2025 - 22:36:28
- *
- * MODIFICATION LOG
- * - Version         : 1.0.0
- * - Date            : 31/10/2025
- * - Author          : DHANUSH
- * - Modification    :
+ * @created          : 31/10/2025
+ * @modified         : 31/10/2025 - Assistant
  **/
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import { Image } from "primereact/image";
 import "../App.css";
-import { useEffect } from "react";
 
-function HospitalCards({ data }) {
+function HospitalCard({ data }) {
   const [showTimings, setShowTimings] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
   const [bookings, setBookings] = useState([]);
@@ -33,15 +39,15 @@ function HospitalCards({ data }) {
   const afternoonTimings = ["12:30 PM", "01:00 PM", "01:45 PM", "02:30 PM"];
   const eveningTimings = ["06:30 PM", "07:15 PM", "08:00 PM"];
 
-  const toggleBookingSection = () => {
-    setShowTimings(!showTimings);
-    setSelectedTime(null);
-  };
-
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("bookings")) || [];
     setBookings(stored);
   }, []);
+
+  const toggleBookingSection = () => {
+    setShowTimings(!showTimings);
+    setSelectedTime(null);
+  };
 
   const handleBook = () => {
     if (!selectedTime) {
@@ -50,16 +56,19 @@ function HospitalCards({ data }) {
     }
 
     const booking = {
-      hospitalName: data["Hospital Name"],
-      state: data["State"],
-      city: data["City"],
-      address: data["Address"],
-      time: selectedTime,
+      "Hospital Name": data["Hospital Name"] || "Unknown Hospital",
+      City: data["City"] || "Unknown City",
+      State: data["State"] || "Unknown State",
+      "Hospital Type": data["Hospital Type"] || "General",
+      "Hospital overall rating": data["Hospital overall rating"] || "N/A",
+      bookingDate: new Date().toISOString().split("T")[0],
+      bookingTime: selectedTime,
     };
 
     const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
-    existingBookings.push(booking);
-    localStorage.setItem("bookings", JSON.stringify(existingBookings));
+    const updated = [...existingBookings, booking];
+    localStorage.setItem("bookings", JSON.stringify(updated));
+    setBookings(updated);
 
     alert(
       `✅ Appointment booked at ${selectedTime} for ${data["Hospital Name"]}`
@@ -87,7 +96,7 @@ function HospitalCards({ data }) {
 
           <div className="hospital-info">
             <h3>{data["Hospital Name"]}</h3>
-            <p>{data["Address"]}</p>
+            <p>{data["Address"] || "Address not available"}</p>
             <Button
               label="Book FREE Center Visit"
               severity="help"
@@ -169,4 +178,4 @@ function HospitalCards({ data }) {
   );
 }
 
-export default HospitalCards;
+export default HospitalCard;
