@@ -17,6 +17,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Hospitals from "./Components/Hospitals";
 import MyBookings from "./Components/MyBookings";
+import Home from "./Components/Home";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Navbar />
 
         <Routes>
+          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Hospitals />} />
           <Route path="/my-bookings" element={<MyBookings />} />
         </Routes>

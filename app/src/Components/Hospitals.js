@@ -112,7 +112,7 @@ function Hospitals() {
               label="Search"
               type="submit"
               id="searchBtn"
-              severity="help"
+              style={{ backgroundColor: "#db09cd" }}
               onClick={handleSubmit}
             />
           </div>
